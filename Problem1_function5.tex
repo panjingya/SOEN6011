@@ -1,0 +1,56 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\usepackage{booktabs} % For formal tables
+
+\usepackage[ruled]{algorithm2e} % For algorithms
+\renewcommand{\algorithmcfname}{ALGORITHM}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{PROBLEM 1.} \hfill \textbf{Jingya Pan} \\
+\normalsize SOEN 6011 \hfill \textbf{40044079} \\
+ SOFTWARE ENGINEERING PROCESSES \hfill Due Date: 7/5/2019 \\
+\hfill Github address : https://github.com/panjingya/SOEN6011.git
+
+\section{Introduction}
+
+F5: $\Gamma \left( x \right)$ which is named as gamma function, is a commonly used extension of the factorial function to complex numbers\\
+
+Lets define f be the Gamma Function from A to B,therefore A is the domain and B is the  co-domain of the Gamma Function.\\ \\
+\indent(A)Domain of function: includes all complex numbers and the positive integer.\\
+
+(B)Co-domain of function: \\
+\indent\indent\indent When a in A is a positive integer, then the gamma function is related to the factorial function  $\Gamma(a) = (a-1)!$ \\
+\indent\indent\indent When a in A for complex numbers with a positive real part, then the ${\displaystyle \Gamma (a)=\int _{0}^{\infty }x^{a-1}e^{-x}\,dx.}$
+
+\section{Characteristics}
+\indent\indent (1)when ${\displaystyle} a\to 0^+, {\displaystyle} \Gamma(a)\to+\infty$ \\
+
+\indent (2)Extreme property: For any real number a,  a$\in\mathbf{R}$, $\lim_{n\to\infty} \frac{\Gamma(n+a)}{\Gamma(n)n^{a}} = 1, $ \\
+
+\indent (3)Assisting computation of probability density function, ${\displaystyle \Gamma \left(n+{\tfrac {1}{2}}\right)={\frac {(2n)!{\sqrt {\pi }}}{n!4^{n}}}}$ \\
+
+\indent(4)Satisfies the recursive property: $\Gamma(a)=(a-1)*\Gamma(a-1)$
+
+\section{Special Number}
+\indent\indent $\Gamma(1) = 0! = 1$\\
+\indent $\Gamma(2) = 1! = 1$ \\
+\indent $\Gamma(3) = 2! = 2$ \\
+\indent $\Gamma(4) = 3! = 6$ \\
+\indent Results can be worked out by Characteristics(4)---recursive property, use$\Gamma(5)$ as an example \\
+\indent $\Gamma(5)=4*Gamma(4)=4*3*Gamma(3)=4*3*2*1*Gamma(1)=4!=24$
+\section{References}
+\indent\indent
+[En.wikipedia.org] Gamma function https://en.wikipedia.org/wiki/Gamma function\\
+
+[Course Resource] Function http://users.encs.concordia.ca/~kamthan/courses/soen-6011/functions.pdf\\
+
+[Jekyll.math.byuh.edu]Properties of the Gamma function \\
+\indent \indent\indent\indent\indent\indent\indent http://www.jekyll.math.byuh.edu/courses/m321/handouts/gammaproperties.pdf
+
+\end{document}
