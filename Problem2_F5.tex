@@ -1,0 +1,74 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\usepackage{booktabs} % For formal tables
+
+\usepackage[ruled]{algorithm2e} % For algorithms
+\renewcommand{\algorithmcfname}{ALGORITHM}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{PROBLEM 2.} \hfill \textbf{Jingya Pan} \\
+\normalsize SOEN 6011 \hfill \textbf{40044079} \\
+ SOFTWARE ENGINEERING PROCESSES \hfill Due Date: 7/12/2019 \\
+\hfill Github address : https://github.com/panjingya/SOEN6011.git
+
+\section{Requirements and corresponding properties}
+\indent ID:  FR5 - $\Gamma \left( x \right)$ \\ \\
+(1)R1 \\
+\indent When the user entered the parameter x, [Subject] the calculating system shall [Action] verify the validation of the parameter. If it is not valid, show up the error message and give the tip and instruct the user to enter the value with correct format. 
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: For the gamma function, 0 and all the negative integers are not defined. Let us use $\Gamma \left( 0 \right)$ as an example. ${\displaystyle \Gamma (0)=\int _{0}^{\infty }x^{-1}e^{-x}\,dx}$. The problem is that this is not integrable. While it decays very rapidly for large x, for small x it looks like 1/x. The details are : \\\\
+     $\lim_{a \to 0}\int _{a}^{1}x^{-1}e^{-x}dx \geq \frac{1}{e}\lim_{a \to 0}\int _{a}^{1} \frac{dx}{x}=\lim_{a \to 0}-log_a=\infty$ \\\\
+    Thus $\Gamma \left( 0 \right)$ is undefined, and hence by the functional equation it is also undefined for all the negative integers.
+    \item Difficulty: Easy
+    \item Type: Functional requirement
+\end{itemize}
+(2)R2
+
+\indent When the parameter x for the gamma function is received,[Subject] the calculating system shall [Action] process the gamma function with the received parameter x [Constraint] within  2 or 3 seconds. 
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: Medium
+    \item Rationale: For the calculating system, after user clicking the button or using other ways to trigger the action, the system need to give a reaction, so that the user will feel engaged in otherwise it will be confusing.
+    \item Difficulty: Nominal. May have some additional hardware requirements.
+    \item Type: Functional requirement
+\end{itemize}
+(3)R3\\
+\indent The result of the calculating system shall be accurate and correct after user giving a valid input.
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: For the calculating system, the primary concern is to get an accurate result conveniently, which made this requirement imperative.
+    \item Difficulty: Difficult, correct algorithm is needed.
+    \item Type: Functional requirement
+\end{itemize}
+(4)R4\\
+\indent The calculating system shall be maintainable.
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: The calculating system, is not a comparative complex system, but as the system involves, many other parts may need to be included. Therefore seperating the modules before actual implementation is rather important, which made the system be manageable and well-organized.
+    \item Difficulty: Nominal, the module for the system need to be seperated reasonable, otherwise as the system involves, it will be hard to manage and maintain.
+    \item Type: Quality (Non-Functional) Requirements
+\end{itemize}
+\section{References}
+W. (n.d.). GammaAndStirling. Retrieved from https://web.williams.edu/Mathematics/sjmiller/ \\ \texttt{public\_html}/372Fa15/addcomments/GammaAndStirling.pdf \\
+
+\setlength{\parindent}{1em}
+29148-2018 --- ISO/IEC/IEEE International Standard -- Systems and software engineering -- Life cycle processes -- Requirements engineering. (2018, November 30). Retrieved from https://standards.ieee.org/standard/29148-2018.html
+\end{document}
