@@ -1,0 +1,205 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\usepackage{booktabs} % For formal tables
+
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{DELIVERABLE 1} \hfill \textbf{Jingya Pan} \\
+\normalsize SOEN 6011 \hfill \textbf{40044079} \\
+ SOFTWARE ENGINEERING PROCESSES \hfill Due Date: 7/19/2019 \\
+ \hfill Github address : https://github.com/panjingya/SOEN6011.git
+
+\section{Problem 1}
+\subsection{Introduction}
+
+F5: $\Gamma \left( x \right)$ which is named as gamma function, is a commonly used extension of the factorial function to complex numbers\\
+
+Lets define f be the Gamma Function from A to B,therefore A is the domain and B is the  co-domain of the Gamma Function.\\ \\
+\indent(A)Domain of function: includes all complex numbers and the positive integer.\\
+
+(B)Co-domain of function: \\
+\indent\indent\indent When a in A is a positive integer, then the gamma function is related to the factorial function  $\Gamma(a) = (a-1)!$ \\
+\indent\indent\indent When a in A for complex numbers with a positive real part, then the ${\displaystyle \Gamma (a)=\int _{0}^{\infty }x^{a-1}e^{-x}\,dx.}$
+
+\subsection{Characteristics}
+\indent\indent (1)when ${\displaystyle} a\to 0^+, {\displaystyle} \Gamma(a)\to+\infty$ \\
+
+\indent (2)Extreme property: For any real number a,  a$\in\mathbf{R}$, $\lim_{n\to\infty} \frac{\Gamma(n+a)}{\Gamma(n)n^{a}} = 1, $ \\
+
+\indent (3)Assisting computation of probability density function, ${\displaystyle \Gamma \left(n+{\tfrac {1}{2}}\right)={\frac {(2n)!{\sqrt {\pi }}}{n!4^{n}}}}$ \\
+
+\indent(4)Satisfies the recursive property: $\Gamma(a)=(a-1)*\Gamma(a-1)$
+
+\subsection{Special Number}
+\indent\indent $\Gamma(1) = 0! = 1$\\
+\indent $\Gamma(2) = 1! = 1$ \\
+\indent $\Gamma(3) = 2! = 2$ \\
+\indent $\Gamma(4) = 3! = 6$ \\
+\indent Results can be worked out by Characteristics(4)---recursive property, use$\Gamma(5)$ as an example \\
+\indent $\Gamma(5)=4*Gamma(4)=4*3*Gamma(3)=4*3*2*1*Gamma(1)=4!=24$\\\\\\\\\\\\\
+
+
+\section{Problem 2}
+\subsection{Requirements and corresponding properties}
+\indent ID:  FR5 - $\Gamma \left( x \right)$ \\ \\
+(1)R1 \\
+\indent When the user entered the parameter x, [Subject] the calculating system shall [Action] verify the validation of the parameter. If it is not valid, show up the error message and give the tip and instruct the user to enter the value with correct format. 
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: For the gamma function, 0 and all the negative integers are not defined. Let us use $\Gamma \left( 0 \right)$ as an example. ${\displaystyle \Gamma (0)=\int _{0}^{\infty }x^{-1}e^{-x}\,dx}$. The problem is that this is not integrable. While it decays very rapidly for large x, for small x it looks like 1/x. The details are : \\\\
+     $\lim_{a \to 0}\int _{a}^{1}x^{-1}e^{-x}dx \geq \frac{1}{e}\lim_{a \to 0}\int _{a}^{1} \frac{dx}{x}=\lim_{a \to 0}-log_a=\infty$ \\\\
+    Thus $\Gamma \left( 0 \right)$ is undefined, and hence by the functional equation it is also undefined for all the negative integers.
+    \item Difficulty: Easy
+    \item Type: Functional requirement
+\end{itemize}
+(2)R2
+
+\indent When the parameter x for the gamma function is received,[Subject] the calculating system shall [Action] process the gamma function with the received parameter x [Constraint] within  2 or 3 seconds. 
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: Medium
+    \item Rationale: For the calculating system, after user clicking the button or using other ways to trigger the action, the system need to give a reaction, so that the user will feel engaged in otherwise it will be confusing.
+    \item Difficulty: Nominal. May have some additional hardware requirements.
+    \item Type: Functional requirement
+\end{itemize}
+(3)R3\\
+\indent The result of the calculating system shall be accurate and correct after user giving a valid input.
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: For the calculating system, the primary concern is to get an accurate result conveniently, which made this requirement imperative.
+    \item Difficulty: Difficult, correct algorithm is needed.
+    \item Type: Functional requirement
+\end{itemize}
+(4)R4\\
+\indent The calculating system shall be maintainable.
+
+\begin{itemize}
+    \item Version number: 1.0
+    \item Owner: Jingya Pan
+    \item Priority: High
+    \item Rationale: The calculating system, is not a comparative complex system, but as the system involves, many other parts may need to be included. Therefore seperating the modules before actual implementation is rather important, which made the system be manageable and well-organized.
+    \item Difficulty: Nominal, the module for the system need to be seperated reasonable, otherwise as the system involves, it will be hard to manage and maintain.
+    \item Type: Quality (Non-Functional) Requirements
+\end{itemize}
+\pagebreak
+
+\section{Problem 3}
+\subsection{Gamma function with Lanczos}
+\begin{algorithm}
+
+\caption{Gamma function with Lanczos approximation}
+
+\textbf{Require:}  value: $x \in $ non-negative integer \Comment{else raise an exception}\\
+\textbf{Ensure:} g is a constant that chosen arbitrarily subject to the restriction that Re(z) $>\frac{1}{2}$.
+\begin{algorithmic}[1]
+
+\Procedure {lanczosGamma}{$double $ x}
+    \State if x $< \frac{1}{2}$ then
+    \State \indent $\Gamma (x)={\pi  \over \sin \pi x \Gamma (1-x)}.$  \Comment{Reflection formula}
+    \State g $\leftarrow$  a small integer
+    \State A $\leftarrow$ a convergent with 5-10 terms \Comment{single or double floating-point precision.}
+    
+    
+    \For {$k \leftarrow 1, A.length $}
+    \State $A_{g}(x)=c_{0}+{\frac  {c_{k}}{x+k}}$
+    \EndFor
+    \State ${\displaystyle \Gamma (x+1)={\sqrt {2\pi }}{\left(x+g+{\tfrac {1}{2}}\right)}^{x+{\frac {1}{2}}}e^{-\left(x+g+{\frac {1}{2}}\right)}A_{g}(x)}$
+    
+    \State \textbf{return} $\Gamma (x)$
+    \EndProcedure
+\Statex
+
+\State $result \leftarrow \Gamma (x)$ 
+
+\end{algorithmic}
+\end{algorithm}
+
+Lanczos approximation uses the  reflection formula to make an extension to the factorial method which will be used to calculate the input smaller that $\frac{1}{2}$. For other values, it will use another formula. First of all, 5 to 10 terms of the series in an aggregation are needed to compute the gamma function with typical single or double floating-point precision and choose a fixed constant g, which will be all used to calculate the coefficients.And then bring it in the formula ${\displaystyle \Gamma (x+1)={\sqrt {2\pi }}{\left(x+g+{\tfrac {1}{2}}\right)}^{x+{\frac {1}{2}}}e^{-\left(x+g+{\frac {1}{2}}\right)}A_{g}(x)}$.
+
+\subsection{Gamma function with Stirling}
+\begin{algorithm}
+
+\caption{Gamma function with Stirling's approximation}
+
+\textbf{Require:}  value: $x \in $ non-negative integer \Comment{else raise an exception}\\
+\textbf{Ensure:} x is large in absolute value
+\begin{algorithmic}[1]
+
+\Procedure {stirlingGamma}{$double $ x}
+    \State \indent $\Gamma (x) = {\sqrt {\frac{2\pi}{n}}{(\frac{n}{e})}^n(1+O(\frac{1}{x}))}.$  \Comment{formula is an asymptotic expansion}
+    
+    \State \textbf{return} $\Gamma (x)$
+    \EndProcedure
+\Statex
+
+\State $result \leftarrow \Gamma (x)$ 
+\end{algorithmic}
+\end{algorithm}
+
+For all positive integers, ${\displaystyle x!=\Gamma (x+1)}$ will be applicable. However  the gamma function, unlike the factorial, is more broadly defined for all complex numbers other than non-positive integers; nevertheless, Stirling's formula may still be applied. If $Re(x) > 0$\\ then, ${\displaystyle \ln \Gamma (x)=x\ln x-x+{\tfrac {1}{2}}\ln {\frac {2\pi }{x}}+\int _{0}^{\infty }{\frac {2\arctan \left({\frac {t}{x}}\right)}{e^{2\pi t}-1}}\,{\rm {d}}t.}$, repeated integration by parts gives\\${\displaystyle \ln \Gamma (x)\sim x\ln x-x+{\tfrac {1}{2}}\ln {\frac {2\pi }{x}}+\sum _{n=1}^{N-1}{\frac {B_{2n}}{2n(2n-1)x^{2n-1}}}}$,the formula is valid for x large enough in absolute value, so the approximation method will be deduct to ${\displaystyle \Gamma (z)={\sqrt {\frac {2\pi }{z}}}\,{\left({\frac {z}{e}}\right)}^{z}\left(1+O\left({\frac {1}{z}}\right)\right).}$
+
+\subsection{Advantages And Disadvantages}
+\subsubsection{ The Lanczos approximation method}
+\indent \indent Efficiency: The Lanczos approximation method evidently improves the efficiency than the original gamma function defined straightforward as ${\displaystyle \Gamma (x)=\int _{0}^{\infty }t^{x-1}e^{-t}\,dt}$ which need the integral calculating. \\
+
+Application field: The Lanczos approximation method for gamma function has a more broad application than the normal factorial function which can only deal with the positive integer. With the formula deduction, the method is valid for arguments in the right complex half-plane, however with the  reflection formula, it can be extended to the entire complex plane without the negative integer.\\
+
+Accuracy: As the Lanczos method is still an approximation, the result has some deviation. Some sample difference will show below in 3.3.
+
+\subsubsection{ The Stirling's approximation method}
+\indent\indent Accuracy: Stirling's approximation leads to accurate results for some large input, but for some relative some input, the result is not that accurate, which means the relative error occurs.\\
+
+Efficiency: The Stirling's approximation method also improves the efficiency than the original gamma function calculating because the integral calculation really takes time \\
+
+Application field: The Stirling's approximation for gamma function, unlike the factorial, is more broadly defined for all complex numbers other than non-positive integers; nevertheless, Stirling's approximation method may still be applied.\\
+
+Simplicity: Comparing to the other methods implementing the gamma function, the Stirling's approximation method is relatively simple.
+
+\subsection{The result comparation}
+Gamma \hspace{3cm}		Stirling \hspace{3cm}	Lanczos\\
+1.0	\hspace{3cm}	0.9221370088957891\hspace{1cm}	0.9999999999999998\\
+2.0	\hspace{3cm}	0.9595021757444916\hspace{1cm}	1.0000000000000002\\
+3.0	\hspace{3cm}	1.945403197115288 \hspace{1cm}	2.000000000000001\\
+4.0	\hspace{3cm}	5.876543783223323 \hspace{1cm}	6.000000000000007\\
+5.0	\hspace{3cm}	23.60383359151802 \hspace{1cm}	23.999999999999996
+
+\pagebreak
+
+
+\section{References}
+\indent\indent
+P. (n.d.). FUNCTIONS. Retrieved from http://users.encs.concordia.ca/~kamthan/courses/soen-6011/functions.pdf course resourses\\
+
+J. (n.d.). Properties of the Gamma function. Retrieved from http://www.jekyll.math.byuh.edu/courses/ \\ m321/handouts/gammaproperties.pdf\\
+
+W. (n.d.). GammaAndStirling. Retrieved from https://web.williams.edu/Mathematics/sjmiller/ \\ \texttt{public\_html}/372Fa15/addcomments/GammaAndStirling.pdf \\
+
+
+29148-2018 --- ISO/IEC/IEEE International Standard -- Systems and software engineering -- Life cycle processes -- Requirements engineering. (2018, November 30). Retrieved from https://standards.ieee.org/standard/29148-2018.html\\
+
+PUGH, G. R. (2004, November). AN ANALYSIS OF THE LANCZOS GAMMA APPROXIMATION. Retrieved from http://laplace.physics.ubc.ca/People/matt/Doc/ThesesOthers/Phd/pugh.pdf \\
+
+
+Stirling's approximation. (2019, May 18). Retrieved from https://en.wikipedia.org/wiki/Stirling's-approximation-An-alternative-derivation \\
+
+
+Lanczos approximation.(2019, June 25). Retrieved from https://en.wikipedia.org/wiki/Lanczos-approximation
+
+\end{document}
