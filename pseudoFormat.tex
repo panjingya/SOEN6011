@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+
+\begin{algorithm}
+
+\caption{Calculate Logarithm Function}
+
+\textbf{Require:}  value: $x > 0$ And base: $b \neq 1 \vee b > 0$ \Comment{where $x,b \in \mathcal{R}^+$}\\
+\textbf{Ensure:} $result = \log_b x$
+\begin{algorithmic}[1]
+
+\Procedure {CalculatePower}{$base$, $exponent$}
+    \State $power \leftarrow 1$
+    
+    \For {$i \leftarrow 1, exponent$}
+    \State $power \leftarrow power * base$
+    \EndFor
+    \State \textbf{return} $power$\Comment{It returns the base to the power exponent}
+    \EndProcedure
+\Statex
+
+\Procedure {CalculateNaturalLog}{$value$}
+    \State $sum \leftarrow 0$
+    \State $j \leftarrow (value-1) / (value+1)$
+    \For {$i \leftarrow 1, \infty$}
+    \State $k \leftarrow (2 * i) -1$
+    \State $sum \leftarrow sum + (1/k) * \Call{CalculatePower}{j,k} $
+    \EndFor
+    \State \textbf{return} $2*sum$\Comment{It returns ln using series expansion.}
+    \EndProcedure
+\Statex
+
+\State $ a \leftarrow \Call{CalculateNaturalLog}{x}$\Comment{Calculates $ln x$}
+\State $ b \leftarrow \Call{CalculateNaturalLog}{b}$\Comment{Calculates $ln b$}
+\State $result \leftarrow a/b $\Comment{Final result of $log_b x$}
+
+\end{algorithmic}
+\end{algorithm}
+\end{document}
